@@ -40,8 +40,9 @@ export async function updateMemo(formData: FormData) {
   const id = formData.get('id') as string
   const title = formData.get('title') as string
   const content = formData.get('content') as string
+  const is_public = formData.get('is_public') as string
 
-  const { error } = await supabase.from('memos').update({ title, content }).eq('id', id)
+  const { error } = await supabase.from('memos').update({ title, content, is_public }).eq('id', id)
   if (error) throw new Error(error.message)
 
   revalidatePath('/memo')

@@ -1,23 +1,26 @@
 // /src/app/memo/MemoList.tsx
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { deleteMemo, updateMemo, createMemo } from './actions'
+import { useState } from "react";
+import { deleteMemo, updateMemo, createMemo } from "./actions";
 
-export default function MemoList({ memos }: { memos: any[] }) {
-  const [editingId, setEditingId] = useState<string | null>(null)
+export default function MemoList({ memos }: { memos: { id: string; title: string; content: string; is_public: boolean }[] }) {
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    await createMemo(formData)
-    window.location.reload()
-  }
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    await createMemo(formData);
+    window.location.reload();
+  };
 
   return (
     <div className="space-y-6">
       {/* ★★ 追加フォームは常に表示 ★★ */}
-      <form onSubmit={handleCreate} className="border p-4 rounded shadow bg-white space-y-2">
+      <form
+        onSubmit={handleCreate}
+        className="border p-4 rounded shadow bg-white space-y-2"
+      >
         <input
           name="title"
           placeholder="タイトルを入力"
@@ -30,14 +33,19 @@ export default function MemoList({ memos }: { memos: any[] }) {
           className="border rounded p-2 w-full h-24"
           required
         />
-        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+        <button
+          type="submit"
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+        >
           メモを追加
         </button>
       </form>
 
       {/* ★★ メモ一覧（ある場合のみ） ★★ */}
       {memos.length === 0 ? (
-        <p className="text-gray-500 text-center mt-4">まだメモがありません 📝</p>
+        <p className="text-gray-500 text-center mt-4">
+          まだメモがありません 📝
+        </p>
       ) : (
         <ul className="space-y-4">
           {memos.map((memo) =>
@@ -45,20 +53,49 @@ export default function MemoList({ memos }: { memos: any[] }) {
               <form
                 key={memo.id}
                 onSubmit={async (e) => {
-                  e.preventDefault()
-                  const formData = new FormData(e.currentTarget)
-                  await updateMemo(formData)
-                  setEditingId(null)
-                  window.location.reload()
+                  e.preventDefault();
+                  const formData = new FormData(e.currentTarget);
+                  await updateMemo(formData);
+                  setEditingId(null);
+                  window.location.reload();
                 }}
                 className="border p-4 bg-gray-50 rounded space-y-2"
               >
                 <input type="hidden" name="id" value={memo.id} />
-                <input name="title" defaultValue={memo.title} className="border rounded p-2 w-full" />
-                <textarea name="content" defaultValue={memo.content} className="border rounded p-2 w-full h-24" />
+                <input
+                  name="title"
+                  defaultValue={memo.title}
+                  className="border rounded p-2 w-full"
+                />
+                <textarea
+                  name="content"
+                  defaultValue={memo.content}
+                  className="border rounded p-2 w-full h-24"
+                />
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    name="is_public"
+                    defaultChecked={memo.is_public}
+                  />
+                  <span className="text-sm text-gray-700">
+                    このメモを公開する
+                  </span>
+                </label>
                 <div className="flex gap-2">
-                  <button type="submit" className="bg-blue-500 text-white px-3 py-1 rounded">保存</button>
-                  <button type="button" className="text-gray-500 underline" onClick={() => setEditingId(null)}>キャンセル</button>
+                  <button
+                    type="submit"
+                    className="bg-blue-500 text-white px-3 py-1 rounded"
+                  >
+                    保存
+                  </button>
+                  <button
+                    type="button"
+                    className="text-gray-500 underline"
+                    onClick={() => setEditingId(null)}
+                  >
+                    キャンセル
+                  </button>
                 </div>
               </form>
             ) : (
@@ -68,9 +105,16 @@ export default function MemoList({ memos }: { memos: any[] }) {
                 <div className="flex gap-3 mt-2">
                   <form action={deleteMemo}>
                     <input type="hidden" name="id" value={memo.id} />
-                    <button className="text-red-500 text-sm hover:underline">削除</button>
+                    <button className="text-red-500 text-sm hover:underline">
+                      削除
+                    </button>
                   </form>
-                  <button className="text-blue-500 text-sm hover:underline" onClick={() => setEditingId(memo.id)}>編集</button>
+                  <button
+                    className="text-blue-500 text-sm hover:underline"
+                    onClick={() => setEditingId(memo.id)}
+                  >
+                    編集
+                  </button>
                 </div>
               </li>
             )
@@ -78,5 +122,5 @@ export default function MemoList({ memos }: { memos: any[] }) {
         </ul>
       )}
     </div>
-  )
+  );
 }
