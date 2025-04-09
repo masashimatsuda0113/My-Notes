@@ -40,7 +40,7 @@ export default async function HomePage({
 
   return (
     <main className="max-w-2xl mx-auto py-8 px-4 space-y-6">
-      <h1 className="text-2xl font-bold text-purple-600">みんなのメモ一覧 📝</h1>
+      <h1 className="text-2xl font-bold text-purple-600">みんなのメモ一覧</h1>
 
       {memos.length === 0 ? (
         <p className="text-gray-500">まだメモがありません</p>
