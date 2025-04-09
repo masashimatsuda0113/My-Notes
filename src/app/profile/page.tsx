@@ -3,10 +3,11 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { updateUserName } from "./actions";
 import { revalidatePath } from "next/cache";
-import Image from "next/image";
+import LoginPrompt from "@/components/LoginPrompt";
+
 export default async function ProfilePage() {
   const user = await currentUser();
-  if (!user) return <p>ログインしてね</p>;
+  if (!user) return <LoginPrompt />;
 
   async function handleUpdate(formData: FormData) {
     "use server";
@@ -57,17 +58,6 @@ export default async function ProfilePage() {
           <strong>メール：</strong>
           {user.emailAddresses[0]?.emailAddress}
         </p>
-        <p>
-          <strong>ユーザーID：</strong>
-          {user.id}
-        </p>
-        <Image
-          src={user.imageUrl}
-          alt="プロフィール画像"
-          className="w-24 h-24 rounded-full border mt-4"
-          width={96}
-          height={96}
-        />
       </div>
     </main>
   );
