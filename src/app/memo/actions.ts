@@ -8,7 +8,7 @@ import { revalidatePath } from 'next/cache'
 // メモを作成するサーバー処理
 export async function createMemo(formData: FormData) {
   const user = await currentUser()
-  if (!user) throw new Error('ログインしてないよ')
+  if (!user) throw new Error('おや？ログインしていないようです。ログインしてからもう一度お試しください。')
 
   const title = formData.get('title') as string
   const content = formData.get('content') as string
@@ -21,7 +21,7 @@ export async function createMemo(formData: FormData) {
     },
   ])
 
-  if (error) throw new Error(error.message)
+  if (error) throw new Error('おや？メモの作成に失敗しました。もう一度お試しください。')
 
   revalidatePath('/memo') // 投稿後にページ再読み込み
 }
@@ -30,7 +30,7 @@ export async function createMemo(formData: FormData) {
 export async function deleteMemo(formData: FormData) {
   const id = formData.get('id') as string
   const { error } = await supabase.from('memos').delete().eq('id', id)
-  if (error) throw new Error(error.message)
+  if (error) throw new Error('おや？メモの削除に失敗しました。もう一度お試しください。')
 
   revalidatePath('/memo')
 }
@@ -43,7 +43,7 @@ export async function updateMemo(formData: FormData) {
   const is_public = formData.get('is_public') as string
 
   const { error } = await supabase.from('memos').update({ title, content, is_public }).eq('id', id)
-  if (error) throw new Error(error.message)
+  if (error) throw new Error('おや？メモの更新に失敗しました。もう一度お試しください。')
 
   revalidatePath('/memo')
 }

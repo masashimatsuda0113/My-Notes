@@ -6,7 +6,7 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
 // ダッシュボードページ配下のルートを保護対象として定義
 // 例: /dashboard, /dashboard/settings など
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)'])
+const isProtectedRoute = createRouteMatcher(['/profile(.*)', '/memo(.*)'])
 
 // Clerkのミドルウェアを設定
 // リクエストごとに認証状態をチェックします

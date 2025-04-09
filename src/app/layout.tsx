@@ -11,8 +11,30 @@ import "./globals.css";
 import { jaJP } from '@clerk/localizations'
 
 export const metadata = {
-  title: "My Notes",
-  description: "まさしのメモアプリ",
+  title: "みんなのメモ帳",
+  description: "みんなで共有するメモアプリ",
+  openGraph: {
+    title: "みんなのメモ帳 - みんなで共有するメモアプリ",
+    description: "メモを共有して、みんなの知識を深めましょう！",
+    url: "https://my-notes-nu-nine.vercel.app/",
+    siteName: "みんなのメモ帳",
+    images: [
+      {
+        url: "/ogp.png",
+        width: 1200,
+        height: 630,
+        alt: "みんなのメモ帳のOGP画像",
+      },
+    ],
+    locale: "ja_JP",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "みんなのメモ帳 - みんなで共有するメモアプリ",
+    description: "メモを共有して、みんなの知識を深めましょう！",
+    images: ["/ogp.png"],
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +49,7 @@ export default function RootLayout({
           <header className="px-4 py-3 flex justify-between items-center bg-white border-b">
             {/* 左側：ロゴ or サイト名 */}
             <h1 className="text-lg font-bold text-purple-600">
-              <Link href="/">My Notes</Link>
+              <Link href="/">みんなのメモ帳</Link>
             </h1>
 
             {/* 中央：メニュー */}
